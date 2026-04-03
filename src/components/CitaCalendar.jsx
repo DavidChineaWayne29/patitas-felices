@@ -140,7 +140,7 @@ export default function CitaCalendar({ animal }) {
         </div>
       </div>
       <div className={styles.field}>
-        <label>{t('cita.whatsapp')} / {t('cita.telefono')}</label>
+        <label>{t('cita.whatsapp')} / {t('cita.telefono')} <span style={{color:'var(--muted)',fontSize:'11px'}}>({t('cita.opcional')})</span></label>
         <input value={form.telefono} onChange={e => setForm(f=>({...f,telefono:e.target.value}))} placeholder="+34 600 000 000"/>
       </div>
       <button className={styles.btnEnviar} type="submit" disabled={loading}>
