@@ -109,15 +109,32 @@ export default function AdminPage() {
   }
 
   async function confirmarCita(id) {
-    await supabase.from('citas').update({ estado: 'confirmada' }).eq('id', id)
-    // Aquí dispararías el email via Supabase Edge Function
-    loadAll()
+  const cita = citas.find(c => c.id === id)
+  
+  // Llamar a la Edge Function que envía el email
+  await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/confirmar-cita`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+    },
+    body: JSON.stringify({ cita_id: id }),
+  })
+
+  // Botón WhatsApp si tiene teléfono
+  if (cita?.telefono) {
+    const tel = cita.telefono.replace(/\s+/g, '').replace('+', '')
+    const msg = encodeURIComponent(`Hola ${cita.nombre}, tu visita a ${cita.animal?.nombre} está confirmada para el ${cita.fecha} a las ${cita.hora}. ¡Hasta pronto! 🐾 Patitas Felices`)
+    window.open(`https://wa.me/${tel}?text=${msg}`, '_blank')
   }
 
-  async function rechazarCita(id) {
-    await supabase.from('citas').update({ estado: 'rechazada' }).eq('id', id)
-    loadAll()
-  }
+  loadAll()
+}
+
+ async function rechazarCita(id) {
+  await supabase.from('citas').update({ estado: 'rechazada' }).eq('id', id)
+  loadAll()
+}
 
   async function actualizarAdopcion(id, estado) {
     await supabase.from('adopciones').update({ estado }).eq('id', id)
