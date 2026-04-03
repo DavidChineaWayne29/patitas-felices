@@ -82,7 +82,12 @@ export default function AuthModal({ onClose }) {
               </div>
               {tab === 'register' && (
                 <div className={styles.field}>
-                  <label>{t('auth.whatsapp')}</label>
+                  <label>
+                    {t('auth.whatsapp')}
+                    <span style={{ color: '#6B8F7A', fontSize: '11px', marginLeft: '6px' }}>
+                      ({t('cita.opcional')})
+                    </span>
+                  </label>
                   <input type="tel" placeholder="+34 600 000 000" value={form.telefono}
                     onChange={e => set('telefono', e.target.value)} />
                 </div>
