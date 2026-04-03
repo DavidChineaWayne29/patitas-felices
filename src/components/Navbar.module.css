@@ -50,11 +50,11 @@
   font-size: 13px;
   color: var(--muted);
   transition: color .15s;
+  text-decoration: none;
 }
 
-.link:hover {
-  color: var(--deep);
-}
+.link:hover { color: var(--deep); }
+.linkActive { color: var(--deep) !important; font-weight: 500; }
 
 .cta {
   background: var(--green);
@@ -68,9 +68,7 @@
   transition: background .15s;
 }
 
-.cta:hover {
-  background: var(--forest);
-}
+.cta:hover { background: var(--forest); }
 
 .userMenu {
   display: flex;
@@ -90,11 +88,10 @@
   color: var(--forest);
   border: 1px solid var(--border);
   border-radius: 8px;
+  text-decoration: none;
 }
 
-.adminBtn:hover {
-  border-color: var(--sage);
-}
+.adminBtn:hover { border-color: var(--sage); }
 
 .outBtn {
   font-size: 12px;
@@ -109,6 +106,31 @@
 .outBtn:hover {
   color: var(--text);
   border-color: var(--sage);
+}
+
+.heartBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  transition: all .15s;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.heartBtn:hover {
+  color: #E8476A;
+  background: #FFF0F4;
+  border-color: #FFCDD8;
+}
+
+.heartActive {
+  color: #E8476A !important;
+  background: #FFF0F4;
+  border-color: #FFCDD8;
 }
 
 @media (max-width: 640px) {
