@@ -144,3 +144,53 @@
   background: var(--mint);
   color: var(--green);
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.reqBox {
+  background: var(--mint);
+  border: 1px solid var(--sage);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.reqBoxIcon { font-size: 40px; margin-bottom: 1rem; }
+
+.reqBox h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 20px;
+  color: var(--deep);
+  margin-bottom: .5rem;
+}
+
+.reqBox p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+.faqs { display: flex; flex-direction: column; gap: 10px; }
+
+.faq {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+}
+
+.faqP { font-size: 14px; font-weight: 600; color: var(--deep); margin-bottom: .4rem; }
+.faqR { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+.cta { background: var(--deep); padding: 3rem 2rem; text-align: center; }
+.ctaInner { max-width: 500px; margin: 0 auto; }
+.cta h2 { font-family: 'Fraunces', serif; font-size: 28px; color: white; margin-bottom: .5rem; }
+.cta p { font-size: 14px; color: var(--sage); margin-bottom: 1.5rem; }
+
+@media (max-width: 640px) {
+  .hero, .section, .sectionAlt { padding: 2rem 1rem; }
+  .pasos { grid-template-columns: 1fr 1fr; }
+  .reqGrid { grid-template-columns: 1fr; gap: 1.5rem; }
+}
