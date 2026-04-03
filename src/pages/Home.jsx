@@ -1,26 +1,29 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { getAnimales } from '../lib/supabase'
 import AnimalCard from '../components/AnimalCard'
 import AuthModal from '../components/AuthModal'
 import styles from './Home.module.css'
 
-const ESPECIES = ['Todos', 'Perro', 'Gato', 'Conejo', 'Ave', 'Otro']
-const TAMANOS  = ['Todos', 'Pequeño', 'Mediano', 'Grande']
-const ESTADOS  = ['Todos', 'Disponible', 'Reservado']
+const ESPECIES = ['filtros.todos', 'filtros.perro', 'filtros.gato', 'filtros.conejo', 'filtros.ave', 'filtros.otro']
+const ESPECIES_VAL = ['Todos', 'Perro', 'Gato', 'Conejo', 'Ave', 'Otro']
+const TAMANOS = ['filtros.todos', 'filtros.pequeno', 'filtros.mediano', 'filtros.grande']
+const TAMANOS_VAL = ['Todos', 'Pequeño', 'Mediano', 'Grande']
 
 export default function Home() {
+  const { t } = useTranslation()
   const [animales, setAnimales] = useState([])
   const [loading, setLoading] = useState(true)
-  const [especie, setEspecie] = useState('Todos')
-  const [tamano, setTamano]   = useState('Todos')
-  const [estado, setEstado]   = useState('Todos')
+  const [especie, setEspecie] = useState(0)
+  const [tamano, setTamano] = useState(0)
+  const [estado, setEstado] = useState(false)
   const [showAuth, setShowAuth] = useState(false)
 
   useEffect(() => {
     const filtros = {}
-    if (especie !== 'Todos') filtros.especie = especie.toLowerCase()
-    if (tamano  !== 'Todos') filtros.tamano  = tamano.toLowerCase()
-    if (estado  !== 'Todos') filtros.estado  = estado.toLowerCase()
+    if (especie > 0) filtros.especie = ESPECIES_VAL[especie].toLowerCase()
+    if (tamano > 0) filtros.tamano = TAMANOS_VAL[tamano].toLowerCase()
+    if (estado) filtros.estado = 'disponible'
     setLoading(true)
     getAnimales(filtros).then(({ data }) => {
       setAnimales(data || [])
@@ -30,23 +33,22 @@ export default function Home() {
 
   return (
     <>
-      {/* Hero */}
       <section className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.heroText}>
-            <div className={styles.eyebrow}>Refugio de animales</div>
-            <h1>Cada animal merece un hogar <em>para siempre</em></h1>
-            <p>Conoce a los animales que esperan tu visita. Adoptar cambia dos vidas — la suya y la tuya.</p>
+            <div className={styles.eyebrow}>{t('home.eyebrow')}</div>
+            <h1>{t('home.titulo')} <em>{t('home.tituloEm')}</em></h1>
+            <p>{t('home.desc')}</p>
             <div className={styles.heroActions}>
               <button className={styles.btnPrimary} onClick={() => document.getElementById('galeria').scrollIntoView({behavior:'smooth'})}>
-                Ver animales
+                {t('home.verAnimales')}
               </button>
-              <button className={styles.btnOutline}>Cómo adoptar</button>
+              <button className={styles.btnOutline}>{t('home.comoAdoptar')}</button>
             </div>
             <div className={styles.stats}>
-              <div><div className={styles.statN}>{animales.length || '—'}</div><div className={styles.statL}>En adopción</div></div>
-              <div><div className={styles.statN}>312</div><div className={styles.statL}>Adoptados</div></div>
-              <div><div className={styles.statN}>8 años</div><div className={styles.statL}>Salvando vidas</div></div>
+              <div><div className={styles.statN}>{animales.length || '—'}</div><div className={styles.statL}>{t('home.enAdopcion')}</div></div>
+              <div><div className={styles.statN}>312</div><div className={styles.statL}>{t('home.adoptados')}</div></div>
+              <div><div className={styles.statN}>8</div><div className={styles.statL}>{t('home.anyos')}</div></div>
             </div>
           </div>
           <div className={styles.heroImg} aria-hidden>
@@ -61,39 +63,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Filtros */}
       <div className={styles.filtersBar}>
         <div className={styles.filtersInner}>
-          <span className={styles.filterLabel}>Especie</span>
-          {ESPECIES.map(e => (
-            <button key={e} className={`${styles.chip} ${especie===e ? styles.chipOn : ''}`}
-              onClick={() => setEspecie(e)}>{e}</button>
+          <span className={styles.filterLabel}>{t('filtros.especie')}</span>
+          {ESPECIES.map((e, i) => (
+            <button key={e} className={`${styles.chip} ${especie===i ? styles.chipOn : ''}`}
+              onClick={() => setEspecie(i)}>{t(e)}</button>
           ))}
           <div className={styles.sep}/>
-          <span className={styles.filterLabel}>Tamaño</span>
-          {TAMANOS.map(t => (
-            <button key={t} className={`${styles.chip} ${tamano===t ? styles.chipOn : ''}`}
-              onClick={() => setTamano(t)}>{t}</button>
+          <span className={styles.filterLabel}>{t('filtros.tamano')}</span>
+          {TAMANOS.map((t2, i) => (
+            <button key={t2} className={`${styles.chip} ${tamano===i ? styles.chipOn : ''}`}
+              onClick={() => setTamano(i)}>{t(t2)}</button>
           ))}
           <div className={styles.sep}/>
-          {ESTADOS.slice(1).map(s => (
-            <button key={s} className={`${styles.chip} ${estado===s ? styles.chipOn : ''}`}
-              onClick={() => setEstado(prev => prev === s ? 'Todos' : s)}>{s}</button>
-          ))}
+          <button className={`${styles.chip} ${estado ? styles.chipOn : ''}`}
+            onClick={() => setEstado(v => !v)}>{t('filtros.disponible')}</button>
         </div>
       </div>
 
-      {/* Galería */}
       <main className={styles.main} id="galeria">
         <div className={styles.secHead}>
-          <h2>Buscando un hogar</h2>
-          <span className={styles.count}>{animales.length} animales</span>
+          <h2>{t('home.buscandoHogar')}</h2>
+          <span className={styles.count}>{animales.length} {t('home.animales')}</span>
         </div>
 
         {loading ? (
-          <div className={styles.loading}>Cargando animales...</div>
+          <div className={styles.loading}>{t('home.cargando')}</div>
         ) : animales.length === 0 ? (
-          <div className={styles.empty}>No hay animales con esos filtros.</div>
+          <div className={styles.empty}>{t('home.noAnimales')}</div>
         ) : (
           <div className={styles.grid}>
             {animales.map(a => (
