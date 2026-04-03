@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
 import AnimalCard from '../components/AnimalCard'
@@ -8,6 +9,7 @@ import styles from './Favoritos.module.css'
 
 export default function Favoritos() {
   const { user } = useAuth()
+  const { t } = useTranslation()
   const [animales, setAnimales] = useState([])
   const [loading, setLoading] = useState(true)
   const [showAuth, setShowAuth] = useState(false)
@@ -31,30 +33,34 @@ export default function Favoritos() {
   if (!user) return (
     <div className={styles.empty}>
       <div className={styles.emptyIcon}>🤍</div>
-      <h2>Tus favoritos</h2>
-      <p>Inicia sesión para ver los animales que has guardado.</p>
+      <h2>{t('favoritos.loginTitulo')}</h2>
+      <p>{t('favoritos.loginSub')}</p>
       <button className={styles.btnPrimary} onClick={() => setShowAuth(true)}>
-        Iniciar sesión
+        {t('favoritos.iniciarSesion')}
       </button>
       {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
     </div>
   )
 
-  if (loading) return <div className={styles.loading}>Cargando favoritos...</div>
+  if (loading) return <div className={styles.loading}>{t('favoritos.cargando')}</div>
 
   return (
     <div className={styles.wrap}>
       <div className={styles.head}>
-        <h1>Tus favoritos</h1>
-        <p>{animales.length === 0 ? 'Aún no has guardado ningún animal.' : `${animales.length} animal${animales.length !== 1 ? 'es' : ''} guardado${animales.length !== 1 ? 's' : ''}`}</p>
+        <h1>{t('favoritos.titulo')}</h1>
+        <p>
+          {animales.length === 0
+            ? t('favoritos.vacio')
+            : `${animales.length} ${animales.length === 1 ? t('favoritos.guardado') : t('favoritos.guardados')}`}
+        </p>
       </div>
 
       {animales.length === 0 ? (
         <div className={styles.empty}>
           <div className={styles.emptyIcon}>🤍</div>
-          <h2>Sin favoritos todavía</h2>
-          <p>Cuando veas un animal que te guste, pulsa el corazón en su tarjeta para guardarlo aquí.</p>
-          <Link to="/" className={styles.btnPrimary}>Ver animales disponibles</Link>
+          <h2>{t('favoritos.sinFavoritos')}</h2>
+          <p>{t('favoritos.sinFavoritosSub')}</p>
+          <Link to="/" className={styles.btnPrimary}>{t('favoritos.verAnimales')}</Link>
         </div>
       ) : (
         <div className={styles.grid}>
