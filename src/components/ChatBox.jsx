@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
 import {
   getMensajesPublicos, enviarMensajePublico,
@@ -9,6 +10,7 @@ import styles from './ChatBox.module.css'
 
 export default function ChatBox({ animal, tipo = 'publico', onNeedAuth }) {
   const { user } = useAuth()
+  const { t } = useTranslation()
   const [msgs, setMsgs] = useState([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -61,22 +63,20 @@ export default function ChatBox({ animal, tipo = 'publico', onNeedAuth }) {
       <div className={styles.head}>
         <div className={`${styles.dot} ${tipo === 'publico' ? styles.dotG : styles.dotB}`}/>
         {tipo === 'publico'
-          ? `Preguntas sobre ${animal.nombre} (público)`
-          : `Chat privado con el refugio`}
+          ? `${t('chat.publico')} ${animal.nombre} ${t('chat.publicoSuf')}`
+          : t('chat.privado')}
       </div>
 
       {tipo === 'privado' && !user && (
         <div className={styles.loginPrompt}>
-          <button onClick={onNeedAuth}>Inicia sesión para chatear</button>
+          <button onClick={onNeedAuth}>{t('chat.loginPrompt')}</button>
         </div>
       )}
 
       <div className={styles.msgs}>
         {msgs.length === 0 && (
           <p className={styles.empty}>
-            {tipo === 'publico'
-              ? 'Sé el primero en preguntar algo sobre este animal.'
-              : 'Escríbenos para cualquier consulta privada sobre este animal.'}
+            {tipo === 'publico' ? t('chat.emptyPublico') : t('chat.emptyPrivado')}
           </p>
         )}
         {msgs.map(m => (
@@ -97,11 +97,11 @@ export default function ChatBox({ animal, tipo = 'publico', onNeedAuth }) {
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && !e.shiftKey && handleSend()}
-          placeholder={user ? `Escribe un mensaje...` : 'Inicia sesión para escribir'}
+          placeholder={user ? t('chat.escribe') : t('chat.iniciarSesion')}
           disabled={!user || loading}
         />
         <button onClick={handleSend} disabled={!user || loading || !input.trim()}>
-          Enviar
+          {t('chat.enviar')}
         </button>
       </div>
     </div>
