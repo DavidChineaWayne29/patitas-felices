@@ -4,6 +4,9 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import AnimalPage from './pages/AnimalPage'
 import AdminPage from './pages/AdminPage'
+import ComoFunciona from './pages/ComoFunciona'
+import Contacto from './pages/Contacto'
+import Favoritos from './pages/Favoritos'
 
 export default function App() {
   return (
@@ -11,9 +14,12 @@ export default function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/"            element={<Home />} />
-          <Route path="/animal/:id"  element={<AnimalPage />} />
-          <Route path="/admin"       element={<AdminPage />} />
+          <Route path="/"              element={<Home />} />
+          <Route path="/animal/:id"   element={<AnimalPage />} />
+          <Route path="/admin"         element={<AdminPage />} />
+          <Route path="/como-funciona" element={<ComoFunciona />} />
+          <Route path="/contacto"      element={<Contacto />} />
+          <Route path="/favoritos"     element={<Favoritos />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
