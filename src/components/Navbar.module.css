@@ -15,6 +15,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  text-decoration: none;
 }
 
 .brandMark {
@@ -43,7 +44,7 @@
 .links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .link {
@@ -67,13 +68,12 @@
   cursor: pointer;
   transition: background .15s;
 }
-
 .cta:hover { background: var(--forest); }
 
 .userMenu {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .userEmail {
@@ -90,7 +90,6 @@
   border-radius: 8px;
   text-decoration: none;
 }
-
 .adminBtn:hover { border-color: var(--sage); }
 
 .outBtn {
@@ -102,11 +101,7 @@
   border-radius: 8px;
   cursor: pointer;
 }
-
-.outBtn:hover {
-  color: var(--text);
-  border-color: var(--sage);
-}
+.outBtn:hover { color: var(--text); border-color: var(--sage); }
 
 .heartBtn {
   width: 36px;
@@ -120,21 +115,61 @@
   text-decoration: none;
   border: 1px solid transparent;
 }
+.heartBtn:hover { color: #E8476A; background: #FFF0F4; border-color: #FFCDD8; }
+.heartActive { color: #E8476A !important; background: #FFF0F4; border-color: #FFCDD8; }
 
-.heartBtn:hover {
-  color: #E8476A;
-  background: #FFF0F4;
-  border-color: #FFCDD8;
+.langWrap {
+  position: relative;
 }
 
-.heartActive {
-  color: #E8476A !important;
-  background: #FFF0F4;
-  border-color: #FFCDD8;
+.langBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--white);
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text);
+  transition: border-color .15s;
 }
+.langBtn:hover { border-color: var(--sage); }
+
+.langDropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 90px;
+  z-index: 200;
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+}
+
+.langOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: var(--text);
+  cursor: pointer;
+  transition: background .1s;
+  text-align: left;
+}
+.langOption:hover { background: var(--mint); }
+.langOptionActive { background: var(--mint); color: var(--forest); font-weight: 500; }
 
 @media (max-width: 640px) {
   .nav { padding: 0 1rem; }
-  .links { gap: 1rem; }
+  .links { gap: .75rem; }
   .link { display: none; }
+  .userEmail { display: none; }
 }
