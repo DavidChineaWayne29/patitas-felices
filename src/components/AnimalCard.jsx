@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
 import { getLike, toggleLike, getAnimalFotoUrl } from '../lib/supabase'
 import styles from './AnimalCard.module.css'
@@ -14,6 +15,7 @@ const ESPECIES_COLOR = {
 
 export default function AnimalCard({ animal, onNeedAuth }) {
   const { user } = useAuth()
+  const { t } = useTranslation()
   const [liked, setLiked] = useState(false)
   const [fotoUrl, setFotoUrl] = useState(null)
 
@@ -36,10 +38,10 @@ export default function AnimalCard({ animal, onNeedAuth }) {
     <Link to={`/animal/${animal.id}`} className={styles.card}>
       <div className={`${styles.photo} ${bgClass}`}>
         <span className={`${styles.badge} ${disponible ? styles.badgeOk : styles.badgeRes}`}>
-          {animal.estado === 'disponible' ? 'Disponible' : animal.estado === 'reservado' ? 'Reservado' : 'Adoptado'}
+          {animal.estado === 'disponible' ? t('animal.disponible') : animal.estado === 'reservado' ? t('animal.reservado') : t('animal.adoptado')}
         </span>
 
-        <button className={`${styles.likeBtn} ${liked ? styles.liked : ''}`} onClick={handleLike} title="Me gusta">
+        <button className={`${styles.likeBtn} ${liked ? styles.liked : ''}`} onClick={handleLike}>
           <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
           </svg>
@@ -58,8 +60,8 @@ export default function AnimalCard({ animal, onNeedAuth }) {
           {animal.especie} · {animal.raza || 'Mestizo/a'} · {formatEdad(animal.edad_meses)} · {animal.tamano}
         </div>
         <div className={styles.tags}>
-          {animal.vacunado && <span className={styles.tag}>Vacunado/a</span>}
-          {animal.castrado && <span className={styles.tag}>Castrado/a</span>}
+          {animal.vacunado && <span className={styles.tag}>{t('animal.vacunado')}</span>}
+          {animal.castrado && <span className={styles.tag}>{t('animal.castrado')}</span>}
           {animal.caracter?.split(',').slice(0, 2).map(c => (
             <span key={c} className={styles.tag}>{c.trim()}</span>
           ))}
@@ -67,10 +69,12 @@ export default function AnimalCard({ animal, onNeedAuth }) {
         <div className={styles.footer}>
           <button className={`${styles.btnAdopt} ${!disponible ? styles.btnDis : ''}`}
             onClick={e => e.preventDefault()}>
-            {disponible ? `Quiero adoptar${animal.sexo === 'hembra' ? 'la' : 'le'}` : 'Lista de espera'}
+            {disponible
+              ? (animal.sexo === 'hembra' ? t('animal.quieroAdoptarla') : t('animal.quieroAdoptar'))
+              : t('animal.listaEspera')}
           </button>
           <button className={styles.btnVisit} onClick={e => e.preventDefault()}>
-            Visita
+            {t('animal.visita')}
           </button>
         </div>
       </div>
