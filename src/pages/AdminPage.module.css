@@ -1,0 +1,335 @@
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 3rem;
+}
+
+.header {
+  margin-bottom: 1.5rem;
+}
+
+.header h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  color: var(--deep);
+  margin-bottom: .25rem;
+}
+
+.header p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.tab {
+  font-size: 13px;
+  padding: .65rem 1.1rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all .15s;
+  margin-bottom: -1px;
+}
+.tab:hover { color: var(--deep); }
+.tabOn { color: var(--green); border-bottom-color: var(--green); font-weight: 500; }
+
+.section { }
+
+.section h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  color: var(--deep);
+  margin-bottom: 1rem;
+}
+
+.sectionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* Form box */
+.formBox {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.25rem;
+}
+
+.formBox h2 { margin-bottom: 1rem; }
+
+.msgOk {
+  background: var(--mint);
+  color: var(--forest);
+  border-radius: 8px;
+  padding: .6rem .9rem;
+  font-size: 12px;
+  margin-bottom: .75rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field label {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .3px;
+}
+
+.field input, .field select, .field textarea {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  background: var(--cream);
+  color: var(--text);
+  transition: border-color .15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--sage);
+}
+.field textarea { height: 80px; resize: vertical; }
+.field input[type="file"] { padding: 6px; cursor: pointer; }
+
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.check input { cursor: pointer; accent-color: var(--green); }
+
+.formActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btnSave {
+  flex: 1;
+  padding: 10px;
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s;
+}
+.btnSave:hover:not(:disabled) { background: var(--forest); }
+.btnSave:disabled { opacity: .5; cursor: not-allowed; }
+
+.btnCancel {
+  padding: 10px 16px;
+  background: var(--cream);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Lista animales */
+.listBox {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.25rem;
+}
+
+.listBox h2 { margin-bottom: 1rem; }
+
+.animalList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.animalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .65rem .85rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--cream);
+}
+
+.animalInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.animalNombre {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--deep);
+}
+
+.animalMeta {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: capitalize;
+}
+
+.animalActions {
+  display: flex;
+  gap: 6px;
+}
+
+.btnEdit {
+  font-size: 11px;
+  padding: 5px 12px;
+  background: var(--mint);
+  color: var(--forest);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.btnEdit:hover { border-color: var(--sage); }
+
+.btnDel {
+  font-size: 11px;
+  padding: 5px 12px;
+  background: #FFF0F0;
+  color: #C0392B;
+  border: 1px solid #FFCDD2;
+  border-radius: 7px;
+  cursor: pointer;
+}
+.btnDel:hover { background: #FFCDD2; }
+
+/* Citas y adopciones */
+.citaRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+}
+
+.citaPend { background: #FFFBF0; border-color: #FFE4A0; }
+.citaConf { background: var(--mint); border-color: var(--sage); }
+
+.citaInfo { flex: 1; }
+
+.citaNombre {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--deep);
+  margin-bottom: 3px;
+}
+
+.citaMeta {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.citaNotas {
+  font-size: 12px;
+  color: var(--text);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.citaActions { display: flex; gap: 6px; flex-shrink: 0; }
+
+.btnConf {
+  font-size: 11px;
+  padding: 6px 12px;
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+.btnConf:hover { background: var(--forest); }
+
+.btnRech {
+  font-size: 11px;
+  padding: 6px 12px;
+  background: #FFF0F0;
+  color: #C0392B;
+  border: 1px solid #FFCDD2;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.badgeConf {
+  font-size: 11px;
+  padding: 4px 10px;
+  background: var(--green);
+  color: white;
+  border-radius: 20px;
+  height: fit-content;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.chatRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  background: var(--white);
+}
+
+.chatNote {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.empty {
+  font-size: 13px;
+  color: var(--muted);
+  padding: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .wrap { padding: 1rem; }
+  .sectionGrid { grid-template-columns: 1fr; }
+  .row2, .row3 { grid-template-columns: 1fr; }
+}

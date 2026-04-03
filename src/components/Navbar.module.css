@@ -1,0 +1,118 @@
+.nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brandMark {
+  width: 36px;
+  height: 36px;
+  background: var(--green);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brandName {
+  font-family: 'Fraunces', serif;
+  font-size: 19px;
+  color: var(--deep);
+}
+
+.brandTag {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: -2px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.link {
+  font-size: 13px;
+  color: var(--muted);
+  transition: color .15s;
+}
+
+.link:hover {
+  color: var(--deep);
+}
+
+.cta {
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.cta:hover {
+  background: var(--forest);
+}
+
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userEmail {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.adminBtn {
+  font-size: 12px;
+  padding: 6px 14px;
+  background: var(--mint);
+  color: var(--forest);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.adminBtn:hover {
+  border-color: var(--sage);
+}
+
+.outBtn {
+  font-size: 12px;
+  padding: 6px 14px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.outBtn:hover {
+  color: var(--text);
+  border-color: var(--sage);
+}
+
+@media (max-width: 640px) {
+  .nav { padding: 0 1rem; }
+  .links { gap: 1rem; }
+  .link { display: none; }
+}

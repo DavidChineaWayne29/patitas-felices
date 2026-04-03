@@ -1,0 +1,118 @@
+.box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.head {
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--deep);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dotG { background: var(--green); }
+.dotB { background: #5B8FCC; }
+
+.msgs {
+  flex: 1;
+  padding: .75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 120px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.empty {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin: auto;
+  padding: 1rem 0;
+}
+
+.msg {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.msgUser { align-items: flex-start; }
+.msgAdmin { align-items: flex-start; }
+
+.msgNombre {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.msgTexto {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.msgAdmin .msgTexto {
+  background: var(--mint);
+  color: var(--forest);
+  padding: 7px 10px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.inputRow {
+  display: flex;
+  gap: 6px;
+  padding: .75rem 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.inputRow input {
+  flex: 1;
+  font-size: 12px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--cream);
+  color: var(--text);
+}
+.inputRow input:focus { outline: none; border-color: var(--sage); }
+.inputRow input:disabled { opacity: .5; }
+
+.inputRow button {
+  font-size: 12px;
+  padding: 7px 14px;
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .15s;
+}
+.inputRow button:hover:not(:disabled) { background: var(--forest); }
+.inputRow button:disabled { opacity: .4; cursor: not-allowed; }
+
+.loginPrompt {
+  padding: .5rem 1rem;
+  background: var(--mint);
+  text-align: center;
+}
+.loginPrompt button {
+  font-size: 12px;
+  background: none;
+  border: none;
+  color: var(--forest);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+}
