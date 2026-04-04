@@ -1,10 +1,12 @@
 import { useState, useEffect, useLayoutEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
 import styles from './AnimalPage.module.css'
 
 export default function TestPage() {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const [animal, setAnimal] = useState(null)
   const [fotoUrl, setFotoUrl] = useState(null)
@@ -83,6 +85,9 @@ export default function TestPage() {
 
   return (
     <div className={styles.wrap}>
+      <div className={styles.breadcrumb}>
+        <button onClick={() => navigate('/')}>{t('animal.volverGaleria')}</button>
+      </div>
       <div className={styles.ficha}>
         <div className={styles.fichaPhoto}>
           <div style={{width:'100%',height:'100%',background:'linear-gradient(145deg,#E8F5EE,#C8E6D4)',display:'flex',alignItems:'center',justifyContent:'center'}}>
