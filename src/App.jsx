@@ -23,7 +23,6 @@ export default function App() {
             <Route path="/contacto"      element={<Contacto />} />
             <Route path="/favoritos"     element={<Favoritos />} />
           </Routes>
-          <Footer />
         </div>
       </BrowserRouter>
     </AuthProvider>
