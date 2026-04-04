@@ -121,6 +121,10 @@ export default function Home() {
         )}
       </main>
 
+      <div style={{marginTop:'1rem'}}>
+        <a href="/test" style={{fontSize:'12px', color:'var(--muted)'}}>→ Página de prueba</a>
+      </div>
+
       {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
     </>
   )
