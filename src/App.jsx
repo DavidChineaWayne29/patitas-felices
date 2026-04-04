@@ -42,7 +42,6 @@ export default function App() {
             <Route path="/como-funciona" element={<ComoFunciona />} />
             <Route path="/contacto"      element={<Contacto />} />
             <Route path="/favoritos"     element={<Favoritos />} />
-            <Route path="/test" element={<TestPage />} />
           </Routes>
           <Footer />
         </div>
