@@ -26,10 +26,6 @@ export default function AnimalPage() {
   const [adoptLoading, setAdoptLoading] = useState(false)
 
   useEffect(() => {
-    document.getElementById('root').scrollIntoView({ behavior: 'instant' })
-  }, [])
-
-  useEffect(() => {
     getAnimal(id).then(({ data }) => {
       if (!data) { navigate('/'); return }
       setAnimal(data)
