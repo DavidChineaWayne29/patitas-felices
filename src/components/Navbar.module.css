@@ -405,7 +405,7 @@
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .nav { padding: 0 1rem; }
   .links { display: none; }
   .mobileRight { display: flex; }
