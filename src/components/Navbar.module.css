@@ -111,7 +111,6 @@
   overflow: hidden;
   min-width: 90px;
   z-index: 200;
-  box-shadow: 0 4px 16px rgba(0,0,0,.08);
 }
 
 .langOption {
@@ -180,7 +179,6 @@
   overflow: hidden;
   min-width: 200px;
   z-index: 200;
-  box-shadow: 0 4px 16px rgba(0,0,0,.08);
 }
 
 .userDropdownMobile {
@@ -193,7 +191,6 @@
   overflow: hidden;
   min-width: 200px;
   z-index: 200;
-  box-shadow: 0 4px 16px rgba(0,0,0,.08);
 }
 
 .userDropdownHeader {
@@ -272,7 +269,6 @@
   overflow: hidden;
   min-width: 90px;
   z-index: 200;
-  box-shadow: 0 4px 16px rgba(0,0,0,.08);
 }
 
 .avatarBtn {
@@ -321,7 +317,7 @@
   text-decoration: none;
   color: var(--muted);
   font-size: 9px;
-  padding: 4px 0;
+  padding: 6px 0;
   transition: color .15s;
   border: none;
   background: none;
@@ -413,8 +409,5 @@
   .nav { padding: 0 1rem; }
   .links { display: none; }
   .mobileRight { display: flex; }
-  .bottomBar {
-    display: flex;
-    padding-bottom: max(6px, env(safe-area-inset-bottom));
-  }
+  .bottomBar { display: flex; }
 }
