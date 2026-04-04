@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, useParams } from 'react-router-dom'
 import { useEffect, useLayoutEffect } from 'react'
 import { AuthProvider } from './hooks/useAuth'
 import Navbar from './components/Navbar'
@@ -23,6 +23,11 @@ function ScrollToTop() {
   return null
 }
 
+function AnimalPageWrapper() {
+  const { id } = useParams()
+  return <AnimalPage key={id} />
+}
+
 export default function App() {
   return (
     <AuthProvider>
@@ -32,7 +37,7 @@ export default function App() {
         <div className="main-content">
           <Routes>
             <Route path="/"              element={<Home />} />
-            <Route path="/animal/:id"   element={<AnimalPage />} />
+            <Route path="/animal/:id"   element={<AnimalPageWrapper />} />
             <Route path="/admin"         element={<AdminPage />} />
             <Route path="/como-funciona" element={<ComoFunciona />} />
             <Route path="/contacto"      element={<Contacto />} />
