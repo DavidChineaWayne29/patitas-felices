@@ -328,6 +328,75 @@
   padding: 1rem 0;
 }
 
+.fotoUpload {
+  display: block;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color .15s;
+  background: var(--cream);
+}
+
+.fotoUpload:hover {
+  border-color: var(--green);
+}
+
+.fotoPreview {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.fotoPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.fotoPlaceholder span {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.fotoHint {
+  font-size: 11px !important;
+  color: var(--muted);
+  opacity: .7;
+}
+
+.fotoExiste {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+.fotoExiste span {
+  font-size: 12px;
+  color: var(--forest);
+}
+
+.fotoRemove {
+  margin-top: 6px;
+  font-size: 11px;
+  color: #C0392B;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
 @media (max-width: 768px) {
   .wrap { padding: 1rem; }
   .sectionGrid { grid-template-columns: 1fr; }
