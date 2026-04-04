@@ -87,16 +87,23 @@ export default function ChatBox({ animal, tipo = 'publico', onNeedAuth }) {
             {tipo === 'publico' ? t('chat.emptyPublico') : t('chat.emptyPrivado')}
           </p>
         )}
-        {msgs.map(m => (
-          <div key={m.id} className={`${styles.msg} ${m.autor === 'admin' || m.es_admin ? styles.msgAdmin : styles.msgUser}`}>
-            {(m.autor !== 'admin' && !m.es_admin) && (
-              <span className={styles.msgNombre}>
-                {tipo === 'publico' ? nombreUsuario(m) : 'Tú'}
-              </span>
-            )}
-            <span className={styles.msgTexto}>{m.mensaje}</span>
-          </div>
-        ))}
+        {msgs.map(m => {
+          const esAdmin = m.autor === 'admin' || m.es_admin
+          const esMio = m.usuario_id === user?.id && !esAdmin
+          return (
+            <div key={m.id} className={styles.msgWrap} style={{alignItems: esAdmin ? 'flex-start' : esMio ? 'flex-end' : 'flex-start'}}>
+              {!esAdmin && !esMio && tipo === 'publico' && (
+                <span className={styles.msgNombre}>Usuario</span>
+              )}
+              {esAdmin && (
+                <span className={styles.msgNombre} style={{color:'var(--forest)'}}>Refugio</span>
+              )}
+              <div className={`${styles.msgBurbuja} ${esAdmin ? styles.msgBurbujaAdmin : esMio ? styles.msgBurbujaMia : styles.msgBurbujaOtro}`}>
+                {m.mensaje}
+              </div>
+            </div>
+          )
+        })}
         <div ref={bottomRef}/>
       </div>
 
