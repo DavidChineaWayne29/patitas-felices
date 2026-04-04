@@ -247,15 +247,7 @@ function BottomBar({ isActive, t, user, isAdmin, onAuth, onSignOut }) {
   }, [])
 
   return (
-    <div id="bottom-bar" style={{
-      position: 'fixed',
-      left: 0,
-      right: 0,
-      background: '#FAFFFE',
-      borderTop: '1px solid #D4EAD8',
-      zIndex: 9999,
-      display: 'flex',
-    }}>
+    <div className={styles.bottomBar}>
       <Link to="/" className={`${styles.tabItem} ${isActive('/') ? styles.tabActive : ''}`}>
         <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
           <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
