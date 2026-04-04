@@ -18,11 +18,18 @@ export default function ChatBox({ animal, tipo = 'publico', onNeedAuth }) {
 
   useEffect(() => {
     loadMsgs()
+  }, [animal.id, tipo, user])
+
+  useEffect(() => {
     const tabla = tipo === 'publico' ? 'chat_publico' : 'chat_privado'
-    const channel = supabase.channel(`${tabla}:${animal.id}`)
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: tabla,
-        filter: `animal_id=eq.${animal.id}` }, payload => {
-        setMsgs(prev => [...prev, payload.new])
+    const channel = supabase
+      .channel(`${tabla}_${animal.id}_${Math.random()}`)
+      .on('postgres_changes', {
+        event: 'INSERT',
+        schema: 'public',
+        table: tabla,
+      }, () => {
+        loadMsgs()
       }).subscribe()
     return () => supabase.removeChannel(channel)
   }, [animal.id, tipo])
@@ -48,18 +55,11 @@ export default function ChatBox({ animal, tipo = 'publico', onNeedAuth }) {
     const msg = input.trim()
     setInput('')
     if (tipo === 'publico') {
-      const { data, error } = await enviarMensajePublico(animal.id, user.id, msg)
-      if (error) {
-        console.error('Error chat publico:', error)
-        alert('Error: ' + error.message + ' | Code: ' + error.code)
-      }
+      await enviarMensajePublico(animal.id, user.id, msg)
     } else {
-      const { data, error } = await enviarMensajePrivado(animal.id, user.id, msg, 'user')
-      if (error) {
-        console.error('Error chat privado:', error)
-        alert('Error: ' + error.message + ' | Code: ' + error.code)
-      }
+      await enviarMensajePrivado(animal.id, user.id, msg, 'user')
     }
+    await loadMsgs()
     setLoading(false)
   }
 
