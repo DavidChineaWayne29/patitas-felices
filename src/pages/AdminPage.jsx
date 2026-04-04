@@ -238,9 +238,28 @@ export default function AdminPage() {
                 </div>
                 <div className={styles.field}>
                   <label>Foto principal</label>
-                  <input type="file" accept="image/*" onChange={e=>setFoto(e.target.files[0])}/>
-                  {formAnimal.foto_principal && !foto && (
-                    <span style={{fontSize:'11px',color:'var(--muted)'}}>Ya tiene foto cargada</span>
+                  <label className={styles.fotoUpload}>
+                    {foto ? (
+                      <img src={URL.createObjectURL(foto)} alt="preview" className={styles.fotoPreview}/>
+                    ) : formAnimal.foto_principal ? (
+                      <div className={styles.fotoExiste}>
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--green)"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        <span>Ya tiene foto — haz clic para cambiarla</span>
+                      </div>
+                    ) : (
+                      <div className={styles.fotoPlaceholder}>
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="var(--sage)"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        <span>Haz clic para subir una foto</span>
+                        <span className={styles.fotoHint}>JPG, PNG o WebP · Máx 5MB</span>
+                      </div>
+                    )}
+                    <input type="file" accept="image/*" onChange={e=>setFoto(e.target.files[0])} style={{display:'none'}}/>
+                  </label>
+                  {foto && (
+                    <button type="button" className={styles.fotoRemove}
+                      onClick={() => setFoto(null)}>
+                      Quitar foto
+                    </button>
                   )}
                 </div>
                 <div className={styles.formActions}>
