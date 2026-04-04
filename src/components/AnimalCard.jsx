@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
 import { getLike, toggleLike, getAnimalFotoUrl } from '../lib/supabase'
@@ -34,8 +34,16 @@ export default function AnimalCard({ animal, onNeedAuth }) {
   const bgClass = ESPECIES_COLOR[animal.especie?.toLowerCase()] || styles.bgOtro
   const disponible = animal.estado === 'disponible'
 
+  const navigate = useNavigate()
+
+  function handleClick(e) {
+    e.preventDefault()
+    window.scrollTo(0, 0)
+    navigate(`/animal/${animal.id}`)
+  }
+
   return (
-    <Link to={`/animal/${animal.id}`} className={styles.card}>
+    <Link to={`/animal/${animal.id}`} className={styles.card} onClick={handleClick}>
       <div className={`${styles.photo} ${bgClass}`}>
         <span className={`${styles.badge} ${disponible ? styles.badgeOk : styles.badgeRes}`}>
           {animal.estado === 'disponible' ? t('animal.disponible') : animal.estado === 'reservado' ? t('animal.reservado') : t('animal.adoptado')}
