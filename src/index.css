@@ -51,6 +51,10 @@ img {
   display: block;
 }
 
+html, body {
+  scroll-behavior: auto !important;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--cream); }
