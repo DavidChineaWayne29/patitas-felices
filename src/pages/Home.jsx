@@ -52,12 +52,20 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.heroImg} aria-hidden>
-            <svg viewBox="0 0 100 100" width="120" height="120" opacity=".45">
-              <circle cx="50" cy="60" r="30" fill="#4A9B6F"/>
-              <ellipse cx="32" cy="36" rx="13" ry="20" fill="#4A9B6F" transform="rotate(-18 32 36)"/>
-              <ellipse cx="68" cy="36" rx="13" ry="20" fill="#4A9B6F" transform="rotate(18 68 36)"/>
-              <circle cx="42" cy="61" r="6" fill="#1B4332"/><circle cx="58" cy="61" r="6" fill="#1B4332"/>
-              <path d="M41 73 Q50 80 59 73" stroke="#1B4332" strokeWidth="3" fill="none" strokeLinecap="round"/>
+            <svg viewBox="0 0 160 200" width="160" height="200">
+              <ellipse cx="80" cy="175" rx="55" ry="22" fill="#C8E6D4" opacity=".5"/>
+              <ellipse cx="80" cy="145" rx="40" ry="48" fill="#4A9B6F" opacity=".25"/>
+              <ellipse cx="80" cy="138" rx="36" ry="42" fill="#4A9B6F" opacity=".35"/>
+              <ellipse cx="52" cy="88" rx="17" ry="26" fill="#4A9B6F" opacity=".45" transform="rotate(-15 52 88)"/>
+              <ellipse cx="108" cy="88" rx="17" ry="26" fill="#4A9B6F" opacity=".45" transform="rotate(15 108 88)"/>
+              <circle cx="68" cy="138" r="8" fill="#1B4332"/>
+              <circle cx="92" cy="138" r="8" fill="#1B4332"/>
+              <ellipse cx="80" cy="153" rx="10" ry="6" fill="#1B4332" opacity=".65"/>
+              <path d="M66 163 Q80 172 94 163" stroke="#1B4332" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+              <circle cx="68" cy="134" r="2.5" fill="white" opacity=".5"/>
+              <circle cx="92" cy="134" r="2.5" fill="white" opacity=".5"/>
+              <ellipse cx="32" cy="170" rx="11" ry="7" fill="#4A9B6F" opacity=".35" transform="rotate(-20 32 170)"/>
+              <ellipse cx="128" cy="170" rx="11" ry="7" fill="#4A9B6F" opacity=".35" transform="rotate(20 128 170)"/>
             </svg>
           </div>
         </div>
