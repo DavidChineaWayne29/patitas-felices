@@ -48,9 +48,17 @@ export default function ChatBox({ animal, tipo = 'publico', onNeedAuth }) {
     const msg = input.trim()
     setInput('')
     if (tipo === 'publico') {
-      await enviarMensajePublico(animal.id, user.id, msg)
+      const { data, error } = await enviarMensajePublico(animal.id, user.id, msg)
+      if (error) {
+        console.error('Error chat publico:', error)
+        alert('Error: ' + error.message + ' | Code: ' + error.code)
+      }
     } else {
-      await enviarMensajePrivado(animal.id, user.id, msg, 'user')
+      const { data, error } = await enviarMensajePrivado(animal.id, user.id, msg, 'user')
+      if (error) {
+        console.error('Error chat privado:', error)
+        alert('Error: ' + error.message + ' | Code: ' + error.code)
+      }
     }
     setLoading(false)
   }
