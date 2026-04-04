@@ -88,7 +88,7 @@
 .filtersBar {
   background: var(--white);
   border-bottom: 1px solid var(--border);
-  padding: .85rem 2rem;
+  padding: .75rem 2rem;
   position: sticky;
   top: 60px;
   z-index: 50;
@@ -99,21 +99,49 @@
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: .75rem;
   flex-wrap: wrap;
 }
 
 .filterLabel {
   font-size: 11px;
   color: var(--muted);
-  letter-spacing: .5px;
-  text-transform: uppercase;
+  letter-spacing: .3px;
   flex-shrink: 0;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 2px;
+  background: var(--cream);
+  border-radius: 8px;
+  padding: 3px;
+  border: 1px solid var(--border);
 }
 
 .chip {
   font-size: 12px;
-  padding: 5px 13px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all .15s;
+  white-space: nowrap;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.chip:hover { color: var(--forest); }
+.chipOn {
+  background: var(--white);
+  color: var(--forest);
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+
+.chipDisp {
+  font-size: 11px;
+  padding: 5px 12px;
   border-radius: 20px;
   border: 1px solid var(--border);
   background: var(--white);
@@ -121,11 +149,16 @@
   color: var(--muted);
   transition: all .15s;
   white-space: nowrap;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
-.chip:hover { border-color: var(--sage); color: var(--forest); }
-.chipOn { background: var(--green); color: white; border-color: var(--green); }
+.chipDispOn {
+  background: var(--mint);
+  color: var(--forest);
+  border-color: var(--sage);
+  font-weight: 500;
+}
 
-.sep { width: 1px; height: 16px; background: var(--border); margin: 0 4px; flex-shrink: 0; }
+.sep { width: 1px; height: 16px; background: var(--border); margin: 0 2px; flex-shrink: 0; }
 
 .main {
   max-width: 900px;
