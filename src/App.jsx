@@ -9,6 +9,7 @@ import AdminPage from './pages/AdminPage'
 import ComoFunciona from './pages/ComoFunciona'
 import Contacto from './pages/Contacto'
 import Favoritos from './pages/Favoritos'
+import TestPage from './pages/TestPage'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/como-funciona" element={<ComoFunciona />} />
             <Route path="/contacto"      element={<Contacto />} />
             <Route path="/favoritos"     element={<Favoritos />} />
+            <Route path="/test" element={<TestPage />} />
           </Routes>
           <Footer />
         </div>
