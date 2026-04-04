@@ -1,7 +1,7 @@
 .footer {
   background: var(--deep);
   color: var(--sage);
-  margin-top: 3rem;
+  margin-top: 0;
 }
 
 .inner {
