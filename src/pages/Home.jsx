@@ -5,8 +5,8 @@ import AnimalCard from '../components/AnimalCard'
 import AuthModal from '../components/AuthModal'
 import styles from './Home.module.css'
 
-const ESPECIES = ['filtros.todos', 'filtros.perro', 'filtros.gato', 'filtros.conejo', 'filtros.ave', 'filtros.otro']
-const ESPECIES_VAL = ['Todos', 'Perro', 'Gato', 'Conejo', 'Ave', 'Otro']
+const ESPECIES = ['filtros.todos', 'filtros.perro', 'filtros.gato', 'filtros.otro']
+const ESPECIES_VAL = ['Todos', 'Perro', 'Gato', 'Otro']
 const TAMANOS = ['filtros.todos', 'filtros.pequeno', 'filtros.mediano', 'filtros.grande']
 const TAMANOS_VAL = ['Todos', 'Pequeño', 'Mediano', 'Grande']
 
