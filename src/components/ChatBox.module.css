@@ -116,3 +116,38 @@
   cursor: pointer;
   font-weight: 500;
 }
+
+.msgWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.msgBurbuja {
+  font-size: 12px;
+  line-height: 1.55;
+  padding: 7px 10px;
+  border-radius: 10px;
+  max-width: 85%;
+  word-break: break-word;
+}
+
+.msgBurbujaMia {
+  background: var(--green);
+  color: white;
+  border-radius: 10px 10px 2px 10px;
+}
+
+.msgBurbujaAdmin {
+  background: var(--mint);
+  color: var(--forest);
+  border-radius: 10px 10px 10px 2px;
+}
+
+.msgBurbujaOtro {
+  background: var(--cream);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px 10px 10px 2px;
+}
