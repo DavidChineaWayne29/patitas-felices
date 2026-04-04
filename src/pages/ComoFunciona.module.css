@@ -64,8 +64,8 @@
 }
 .btnOutline:hover { border-color: var(--green); }
 
-.section { padding: 3rem 2rem; }
-.sectionAlt { padding: 3rem 2rem; background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.section { padding: 2rem; }
+.sectionAlt { padding: 2rem; background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
 .sectionInner { max-width: 900px; margin: 0 auto; }
 
@@ -184,7 +184,7 @@
 .faqP { font-size: 14px; font-weight: 600; color: var(--deep); margin-bottom: .4rem; }
 .faqR { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-.cta { background: var(--deep); padding: 3rem 2rem; text-align: center; }
+.cta { background: var(--deep); padding: 1.5rem 2rem; text-align: center; }
 .ctaInner { max-width: 500px; margin: 0 auto; }
 .cta h2 { font-family: 'Fraunces', serif; font-size: 28px; color: white; margin-bottom: .5rem; }
 .cta p { font-size: 14px; color: var(--sage); margin-bottom: 1.5rem; }
