@@ -22,6 +22,8 @@ export default function AnimalPage() {
   const [adoptOk, setAdoptOk] = useState(false)
   const [adoptLoading, setAdoptLoading] = useState(false)
 
+  useEffect(() => { window.scrollTo(0,0) }, [id])
+
   useEffect(() => {
     document.getElementById('root').scrollIntoView({ behavior: 'instant' })
   }, [])
