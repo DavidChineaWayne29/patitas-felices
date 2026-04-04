@@ -70,9 +70,9 @@ export default function AnimalPage() {
 
   function formatEdad(meses) {
     if (!meses) return ''
-    if (meses < 12) return `${meses} meses`
+    if (meses < 12) return `${meses} ${t('animal.meses')}`
     const a = Math.floor(meses / 12)
-    return `${a} ${a === 1 ? 'año' : 'años'}`
+    return `${a} ${a === 1 ? t('animal.anyo') : t('animal.anyos')}`
   }
 
   if (loading) return <div className={styles.loading}>{t('home.cargando')}</div>
@@ -104,7 +104,7 @@ export default function AnimalPage() {
 
             <h1 className={styles.nombre}>{animal.nombre}</h1>
             <p className={styles.sub}>
-              {[animal.especie, animal.raza || 'Mestizo/a', formatEdad(animal.edad_meses), animal.tamano, animal.sexo]
+              {[animal.especie, animal.raza || t('animal.mestizo'), formatEdad(animal.edad_meses), animal.tamano, animal.sexo]
                 .filter(Boolean).join(' · ')}
             </p>
 
