@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './hooks/useAuth'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import Home from './pages/Home'
 import AnimalPage from './pages/AnimalPage'
 import AdminPage from './pages/AdminPage'
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="/contacto"      element={<Contacto />} />
             <Route path="/favoritos"     element={<Favoritos />} />
           </Routes>
+          <Footer />
         </div>
       </BrowserRouter>
     </AuthProvider>
