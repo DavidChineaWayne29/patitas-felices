@@ -8,6 +8,9 @@ const resources = {
       nav: {
         adoptar: 'Adoptar', comoFunciona: 'Cómo funciona', contacto: 'Contacto',
         favoritos: 'Mis favoritos', iniciarSesion: 'Iniciar sesión', salir: 'Salir', panelAdmin: 'Panel admin',
+        cerrarSesionT: '¿Cerrar sesión?',
+        cerrarSesionD: '¿Seguro que quieres salir de tu cuenta?',
+        cancelar: 'Cancelar',
       },
       home: {
         eyebrow: 'Refugio de animales', titulo: 'Cada animal merece un hogar', tituloEm: 'para siempre',
@@ -128,6 +131,9 @@ const resources = {
       nav: {
         adoptar: 'Adopt', comoFunciona: 'How it works', contacto: 'Contact',
         favoritos: 'My favourites', iniciarSesion: 'Sign in', salir: 'Sign out', panelAdmin: 'Admin panel',
+        cerrarSesionT: 'Sign out?',
+        cerrarSesionD: 'Are you sure you want to sign out?',
+        cancelar: 'Cancel',
       },
       home: {
         eyebrow: 'Animal shelter', titulo: 'Every animal deserves a home', tituloEm: 'forever',
@@ -248,6 +254,9 @@ const resources = {
       nav: {
         adoptar: 'Adopter', comoFunciona: 'Comment ça marche', contacto: 'Contact',
         favoritos: 'Mes favoris', iniciarSesion: 'Se connecter', salir: 'Se déconnecter', panelAdmin: 'Panel admin',
+        cerrarSesionT: 'Se déconnecter ?',
+        cerrarSesionD: 'Êtes-vous sûr de vouloir vous déconnecter ?',
+        cancelar: 'Annuler',
       },
       home: {
         eyebrow: 'Refuge pour animaux', titulo: 'Chaque animal mérite un foyer', tituloEm: 'pour toujours',
@@ -366,6 +375,9 @@ const resources = {
       nav: {
         adoptar: 'Adoptieren', comoFunciona: 'So funktioniert es', contacto: 'Kontakt',
         favoritos: 'Meine Favoriten', iniciarSesion: 'Anmelden', salir: 'Abmelden', panelAdmin: 'Admin-Panel',
+        cerrarSesionT: 'Abmelden?',
+        cerrarSesionD: 'Möchtest du dich wirklich abmelden?',
+        cancelar: 'Abbrechen',
       },
       home: {
         eyebrow: 'Tierheim', titulo: 'Jedes Tier verdient ein Zuhause', tituloEm: 'für immer',
