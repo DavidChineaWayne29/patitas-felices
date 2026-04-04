@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../hooks/useAuth'
 import { getLike, toggleLike, getAnimalFotoUrl } from '../lib/supabase'
@@ -16,6 +16,7 @@ const ESPECIES_COLOR = {
 export default function AnimalCard({ animal, onNeedAuth }) {
   const { user } = useAuth()
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const [liked, setLiked] = useState(false)
   const [fotoUrl, setFotoUrl] = useState(null)
 
@@ -26,16 +27,26 @@ export default function AnimalCard({ animal, onNeedAuth }) {
 
   async function handleLike(e) {
     e.preventDefault()
+    e.stopPropagation()
     if (!user) { onNeedAuth?.(); return }
     const result = await toggleLike(animal.id, user.id)
     setLiked(result)
+  }
+
+  function goToAnimal(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+    setTimeout(() => navigate(`/animal/${animal.id}`), 10)
   }
 
   const bgClass = ESPECIES_COLOR[animal.especie?.toLowerCase()] || styles.bgOtro
   const disponible = animal.estado === 'disponible'
 
   return (
-    <Link to={`/animal/${animal.id}`} className={styles.card}>
+    <div className={styles.card} onClick={goToAnimal} style={{cursor:'pointer'}}>
       <div className={`${styles.photo} ${bgClass}`}>
         <span className={`${styles.badge} ${disponible ? styles.badgeOk : styles.badgeRes}`}>
           {animal.estado === 'disponible' ? t('animal.disponible') : animal.estado === 'reservado' ? t('animal.reservado') : t('animal.adoptado')}
@@ -57,7 +68,7 @@ export default function AnimalCard({ animal, onNeedAuth }) {
       <div className={styles.body}>
         <div className={styles.name}>{animal.nombre}</div>
         <div className={styles.meta}>
-          {animal.especie} · {animal.raza || 'Mestizo/a'} · {formatEdad(animal.edad_meses)} · {animal.tamano}
+          {animal.especie} · {animal.raza || t('animal.mestizo')} · {formatEdad(animal.edad_meses, t)} · {animal.tamano}
         </div>
         <div className={styles.tags}>
           {animal.vacunado && <span className={styles.tag}>{t('animal.vacunado')}</span>}
@@ -68,25 +79,25 @@ export default function AnimalCard({ animal, onNeedAuth }) {
         </div>
         <div className={styles.footer}>
           <button className={`${styles.btnAdopt} ${!disponible ? styles.btnDis : ''}`}
-            onClick={e => e.preventDefault()}>
+            onClick={goToAnimal}>
             {disponible
               ? (animal.sexo === 'hembra' ? t('animal.quieroAdoptarla') : t('animal.quieroAdoptar'))
               : t('animal.listaEspera')}
           </button>
-          <button className={styles.btnVisit} onClick={e => e.preventDefault()}>
+          <button className={styles.btnVisit} onClick={goToAnimal}>
             {t('animal.visita')}
           </button>
         </div>
       </div>
-    </Link>
+    </div>
   )
 }
 
-function formatEdad(meses) {
+function formatEdad(meses, t) {
   if (!meses) return ''
-  if (meses < 12) return `${meses} meses`
+  if (meses < 12) return `${meses} ${t('animal.meses')}`
   const a = Math.floor(meses / 12)
-  return `${a} ${a === 1 ? 'año' : 'años'}`
+  return `${a} ${a === 1 ? t('animal.anyo') : t('animal.anyos')}`
 }
 
 function AnimalSvg({ especie }) {
