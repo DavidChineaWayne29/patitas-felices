@@ -51,7 +51,7 @@ img { max-width: 100%; display: block; }
   -webkit-overflow-scrolling: touch;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .app-layout {
     padding-bottom: 56px;
   }
