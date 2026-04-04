@@ -1,216 +1,140 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { getAnimal, getAnimalFotoUrl, crearSolicitudAdopcion } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuth'
-import CitaCalendar from '../components/CitaCalendar'
-import ChatBox from '../components/ChatBox'
-import AuthModal from '../components/AuthModal'
-import styles from './AnimalPage.module.css'
+import { getLike, toggleLike, getAnimalFotoUrl } from '../lib/supabase'
+import styles from './AnimalCard.module.css'
 
-export default function AnimalPage() {
-  const { id } = useParams()
-  const navigate = useNavigate()
+const ESPECIES_COLOR = {
+  perro: styles.bgPerro,
+  gato: styles.bgGato,
+  conejo: styles.bgConejo,
+  ave: styles.bgAve,
+  otro: styles.bgOtro,
+}
+
+export default function AnimalCard({ animal, onNeedAuth }) {
   const { user } = useAuth()
   const { t } = useTranslation()
-  const [animal, setAnimal] = useState(null)
+  const navigate = useNavigate()
+  const [liked, setLiked] = useState(false)
   const [fotoUrl, setFotoUrl] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => { window.scrollTo(0,0) }, [id])
-  
-  const [panel, setPanel] = useState(null)
-  const [showAuth, setShowAuth] = useState(false)
-  const [adoptForm, setAdoptForm] = useState({ nombre: '', email: '', telefono: '', mensaje: '' })
-  const [adoptOk, setAdoptOk] = useState(false)
-  const [adoptLoading, setAdoptLoading] = useState(false)
 
   useEffect(() => {
-    getAnimal(id).then(({ data }) => {
-      if (!data) { navigate('/'); return }
-      setAnimal(data)
-      setLoading(false)
-      if (data.foto_principal) getAnimalFotoUrl(data.foto_principal).then(setFotoUrl)
-    })
-  }, [id])
+    if (user) getLike(animal.id, user.id).then(setLiked)
+    if (animal.foto_principal) getAnimalFotoUrl(animal.foto_principal).then(setFotoUrl)
+  }, [animal.id, user])
 
-  useEffect(() => {
-    if (user) {
-      setAdoptForm(f => ({
-        ...f,
-        nombre: user.user_metadata?.nombre || f.nombre,
-        email: user.email || f.email,
-        telefono: user.user_metadata?.telefono || f.telefono,
-      }))
-    }
-  }, [user])
-
-  function openPanel(p) {
-    if (!user) { setShowAuth(true); return }
-    setPanel(prev => prev === p ? null : p)
-    setAdoptOk(false)
-  }
-
-  async function handleAdopt(e) {
+  async function handleLike(e) {
     e.preventDefault()
-    setAdoptLoading(true)
-    await crearSolicitudAdopcion({ animalId: animal.id, usuarioId: user?.id, ...adoptForm })
-    setAdoptLoading(false)
-    setAdoptOk(true)
+    e.stopPropagation()
+    if (!user) { onNeedAuth?.(); return }
+    const result = await toggleLike(animal.id, user.id)
+    setLiked(result)
   }
 
-  function formatEdad(meses) {
-    if (!meses) return ''
-    if (meses < 12) return `${meses} meses`
-    const a = Math.floor(meses / 12)
-    return `${a} ${a === 1 ? 'año' : 'años'}`
+  function goToAnimal(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+    setTimeout(() => navigate(`/animal/${animal.id}`), 10)
   }
 
-  if (loading) return <div className={styles.loading}>{t('home.cargando')}</div>
-  if (!animal) return null
-
+  const bgClass = ESPECIES_COLOR[animal.especie?.toLowerCase()] || styles.bgOtro
   const disponible = animal.estado === 'disponible'
-  const esHembra = animal.sexo === 'hembra'
 
   return (
-    <>
-      <div className={styles.wrap}>
-        <div className={styles.breadcrumb}>
-          <button onClick={() => navigate('/')}>{t('animal.volverGaleria')}</button>
-        </div>
+    <div className={styles.card} onClick={goToAnimal} style={{cursor:'pointer'}}>
+      <div className={`${styles.photo} ${bgClass}`}>
+        <span className={`${styles.badge} ${disponible ? styles.badgeOk : styles.badgeRes}`}>
+          {animal.estado === 'disponible' ? t('animal.disponible') : animal.estado === 'reservado' ? t('animal.reservado') : t('animal.adoptado')}
+        </span>
 
-        <div className={styles.ficha}>
-          <div className={styles.fichaPhoto}>
-            {fotoUrl
-              ? <img src={fotoUrl} alt={animal.nombre} className={styles.foto}/>
-              : <AnimalSvg especie={animal.especie} />}
-          </div>
+        <button className={`${styles.likeBtn} ${liked ? styles.liked : ''}`} onClick={handleLike}>
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </button>
 
-          <div className={styles.fichaInfo}>
-            <div className={styles.fichaTop}>
-              <span className={`${styles.estadoBadge} ${disponible ? styles.ok : styles.res}`}>
-                {animal.estado === 'disponible' ? t('animal.disponible') : animal.estado === 'reservado' ? t('animal.reservado') : t('animal.adoptado')}
-              </span>
-            </div>
-
-            <h1 className={styles.nombre}>{animal.nombre}</h1>
-            <p className={styles.sub}>
-              {[animal.especie, animal.raza || 'Mestizo/a', formatEdad(animal.edad_meses), animal.tamano, animal.sexo]
-                .filter(Boolean).join(' · ')}
-            </p>
-
-            <p className={styles.desc}>{animal.descripcion}</p>
-
-            <div className={styles.pills}>
-              {animal.vacunado      && <span className={styles.pill}>{t('animal.vacunado')}</span>}
-              {animal.castrado      && <span className={styles.pill}>{t('animal.castrado')}</span>}
-              {animal.desparasitado && <span className={styles.pill}>{t('animal.desparasitado')}</span>}
-              {animal.apto_ninos    && <span className={styles.pill}>{t('animal.aptoNinos')}</span>}
-              {animal.apto_perros   && <span className={styles.pill}>{t('animal.aptoPerros')}</span>}
-              {animal.apto_gatos    && <span className={styles.pill}>{t('animal.aptoGatos')}</span>}
-              {animal.caracter?.split(',').map(c => (
-                <span key={c} className={styles.pill}>{c.trim()}</span>
-              ))}
-            </div>
-
-            <div className={styles.acciones}>
-              <button
-                className={`${styles.btnP} ${!disponible ? styles.btnDis : ''}`}
-                onClick={() => openPanel('adopcion')}
-                disabled={!disponible}>
-                {disponible ? (esHembra ? t('animal.quieroAdoptarla') : t('animal.quieroAdoptar')) : t('animal.listaEspera')}
-              </button>
-              <button className={`${styles.btnS} ${panel === 'cita' ? styles.btnSActive : ''}`}
-                onClick={() => openPanel('cita')}>
-                {t('animal.concertarVisita')}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {panel === 'adopcion' && (
-          <div className={styles.panelBox}>
-            <div className={styles.panelHead}>
-              <h2>{t('adopcion.titulo')} — {animal.nombre}</h2>
-              <button className={styles.panelClose} onClick={() => setPanel(null)}>✕</button>
-            </div>
-            {adoptOk ? (
-              <div className={styles.adoptOk}>
-                <div className={styles.okIcon}>✓</div>
-                <h3>{t('adopcion.okTitulo')}</h3>
-                <p>{t('adopcion.okSub')} {animal.nombre}.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleAdopt} className={styles.adoptForm}>
-                <div className={styles.formRow}>
-                  <div className={styles.field}>
-                    <label>{t('adopcion.nombre')}</label>
-                    <input value={adoptForm.nombre} onChange={e => setAdoptForm(f=>({...f,nombre:e.target.value}))} required placeholder={t('adopcion.nombre')}/>
-                  </div>
-                  <div className={styles.field}>
-                    <label>{t('adopcion.apellidos')}</label>
-                    <input value={adoptForm.apellidos||''} onChange={e => setAdoptForm(f=>({...f,apellidos:e.target.value}))} placeholder={t('adopcion.apellidos')}/>
-                  </div>
-                </div>
-                <div className={styles.formRow}>
-                  <div className={styles.field}>
-                    <label>{t('adopcion.email')}</label>
-                    <input type="email" value={adoptForm.email} onChange={e => setAdoptForm(f=>({...f,email:e.target.value}))} required placeholder="tu@email.com"/>
-                  </div>
-                  <div className={styles.field}>
-                    <label>{t('adopcion.whatsapp')}</label>
-                    <input value={adoptForm.telefono} onChange={e => setAdoptForm(f=>({...f,telefono:e.target.value}))} placeholder="+34 600 000 000"/>
-                  </div>
-                </div>
-                <div className={styles.field}>
-                  <label>{t('adopcion.mensaje')}</label>
-                  <textarea value={adoptForm.mensaje} onChange={e => setAdoptForm(f=>({...f,mensaje:e.target.value}))}
-                    placeholder={t('adopcion.mensajePlaceholder')}/>
-                </div>
-                <button type="submit" className={styles.btnSubmit} disabled={adoptLoading}>
-                  {adoptLoading ? t('adopcion.enviando') : t('adopcion.enviar')}
-                </button>
-                <p className={styles.privacy}>{t('adopcion.privacy')}</p>
-              </form>
-            )}
-          </div>
+        {fotoUrl ? (
+          <img src={fotoUrl} alt={animal.nombre} className={styles.foto} />
+        ) : (
+          <AnimalSvg especie={animal.especie} />
         )}
-
-        {panel === 'cita' && (
-          <div className={styles.panelBox}>
-            <div className={styles.panelHead}>
-              <h2>{t('cita.titulo')} — {animal.nombre}</h2>
-              <button className={styles.panelClose} onClick={() => setPanel(null)}>✕</button>
-            </div>
-            <p className={styles.panelSub}>{t('cita.sub')}</p>
-            <CitaCalendar animal={animal} />
-          </div>
-        )}
-
-        <div className={styles.chats}>
-          <ChatBox animal={animal} tipo="publico" onNeedAuth={() => setShowAuth(true)} />
-          <ChatBox animal={animal} tipo="privado" onNeedAuth={() => setShowAuth(true)} />
-        </div>
       </div>
 
-      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
-    </>
+      <div className={styles.body}>
+        <div className={styles.name}>{animal.nombre}</div>
+        <div className={styles.meta}>
+          {animal.especie} · {animal.raza || t('animal.mestizo')} · {formatEdad(animal.edad_meses, t)} · {animal.tamano}
+        </div>
+        <div className={styles.tags}>
+          {animal.vacunado && <span className={styles.tag}>{t('animal.vacunado')}</span>}
+          {animal.castrado && <span className={styles.tag}>{t('animal.castrado')}</span>}
+          {animal.caracter?.split(',').slice(0, 2).map(c => (
+            <span key={c} className={styles.tag}>{c.trim()}</span>
+          ))}
+        </div>
+        <div className={styles.footer}>
+          <button className={`${styles.btnAdopt} ${!disponible ? styles.btnDis : ''}`}
+            onClick={goToAnimal}>
+            {disponible
+              ? (animal.sexo === 'hembra' ? t('animal.quieroAdoptarla') : t('animal.quieroAdoptar'))
+              : t('animal.listaEspera')}
+          </button>
+          <button className={styles.btnVisit} onClick={goToAnimal}>
+            {t('animal.visita')}
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }
 
+function formatEdad(meses, t) {
+  if (!meses) return ''
+  if (meses < 12) return `${meses} ${t('animal.meses')}`
+  const a = Math.floor(meses / 12)
+  return `${a} ${a === 1 ? t('animal.anyo') : t('animal.anyos')}`
+}
+
 function AnimalSvg({ especie }) {
-  const bgColor = especie?.toLowerCase() === 'perro' ? '#E8F5EE'
-    : especie?.toLowerCase() === 'gato' ? '#EEF5E8'
-    : especie?.toLowerCase() === 'conejo' ? '#E8F0F5' : '#F0EEF5'
+  const e = especie?.toLowerCase()
+  if (e === 'perro') return (
+    <svg viewBox="0 0 100 100" width="90" height="90">
+      <circle cx="50" cy="60" r="28" fill="#4A9B6F" opacity=".4"/>
+      <ellipse cx="32" cy="34" rx="12" ry="18" fill="#4A9B6F" opacity=".55" transform="rotate(-15 32 34)"/>
+      <ellipse cx="68" cy="34" rx="12" ry="18" fill="#4A9B6F" opacity=".55" transform="rotate(15 68 34)"/>
+      <circle cx="43" cy="61" r="5" fill="#1B4332"/><circle cx="57" cy="61" r="5" fill="#1B4332"/>
+      <path d="M42 72 Q50 78 58 72" stroke="#1B4332" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
+    </svg>
+  )
+  if (e === 'gato') return (
+    <svg viewBox="0 0 100 100" width="80" height="80">
+      <circle cx="50" cy="55" r="22" fill="#4A9B6F" opacity=".35"/>
+      <polygon points="32,36 24,18 42,30" fill="#4A9B6F" opacity=".55"/>
+      <polygon points="68,36 76,18 58,30" fill="#4A9B6F" opacity=".55"/>
+      <circle cx="43" cy="56" r="4" fill="#1B4332"/><circle cx="57" cy="56" r="4" fill="#1B4332"/>
+      <path d="M38 65 Q50 72 62 65" stroke="#1B4332" strokeWidth="2" fill="none" strokeLinecap="round"/>
+    </svg>
+  )
+  if (e === 'conejo') return (
+    <svg viewBox="0 0 100 100" width="80" height="80">
+      <circle cx="50" cy="64" r="20" fill="#4A9B6F" opacity=".35"/>
+      <ellipse cx="36" cy="30" rx="9" ry="22" fill="#4A9B6F" opacity=".5"/>
+      <ellipse cx="64" cy="30" rx="9" ry="22" fill="#4A9B6F" opacity=".5"/>
+      <circle cx="44" cy="64" r="4" fill="#1B4332"/><circle cx="56" cy="64" r="4" fill="#1B4332"/>
+      <ellipse cx="50" cy="73" rx="7" ry="4" fill="#1B4332" opacity=".6"/>
+    </svg>
+  )
   return (
-    <div style={{ width:'100%', height:'100%', background: bgColor, display:'flex', alignItems:'center', justifyContent:'center' }}>
-      <svg viewBox="0 0 100 100" width="120" height="120">
-        <circle cx="50" cy="60" r="28" fill="#4A9B6F" opacity=".4"/>
-        <ellipse cx="32" cy="34" rx="12" ry="18" fill="#4A9B6F" opacity=".55" transform="rotate(-15 32 34)"/>
-        <ellipse cx="68" cy="34" rx="12" ry="18" fill="#4A9B6F" opacity=".55" transform="rotate(15 68 34)"/>
-        <circle cx="43" cy="61" r="5" fill="#1B4332"/><circle cx="57" cy="61" r="5" fill="#1B4332"/>
-        <path d="M42 72 Q50 78 58 72" stroke="#1B4332" strokeWidth="2.5" fill="none" strokeLinecap="round"/>
-      </svg>
-    </div>
+    <svg viewBox="0 0 100 100" width="72" height="72">
+      <ellipse cx="50" cy="60" rx="16" ry="20" fill="#4A9B6F" opacity=".4"/>
+      <circle cx="50" cy="38" r="14" fill="#2D6A4F" opacity=".45"/>
+      <circle cx="45" cy="36" r="3" fill="#1B4332"/>
+      <path d="M47 43 L56 40 L52 46 Z" fill="#1B4332"/>
+    </svg>
   )
 }
