@@ -13,14 +13,16 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Navbar />
-        <Routes>
-          <Route path="/"              element={<Home />} />
-          <Route path="/animal/:id"   element={<AnimalPage />} />
-          <Route path="/admin"         element={<AdminPage />} />
-          <Route path="/como-funciona" element={<ComoFunciona />} />
-          <Route path="/contacto"      element={<Contacto />} />
-          <Route path="/favoritos"     element={<Favoritos />} />
-        </Routes>
+        <div style={{ paddingBottom: 'env(safe-area-inset-bottom, 70px)' }} className="main-content">
+          <Routes>
+            <Route path="/"              element={<Home />} />
+            <Route path="/animal/:id"   element={<AnimalPage />} />
+            <Route path="/admin"         element={<AdminPage />} />
+            <Route path="/como-funciona" element={<ComoFunciona />} />
+            <Route path="/contacto"      element={<Contacto />} />
+            <Route path="/favoritos"     element={<Favoritos />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </AuthProvider>
   )
