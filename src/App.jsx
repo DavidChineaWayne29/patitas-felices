@@ -37,7 +37,7 @@ export default function App() {
             <Route path="/como-funciona" element={<ComoFunciona />} />
             <Route path="/contacto"      element={<Contacto />} />
             <Route path="/favoritos"     element={<Favoritos />} />
-            <Route path="/test" element={<TestPage />} />
+            <Route path="/animal/a143a468-51ce-43b3-bf6c-24af30a361e6" element={<TestPage />} />
           </Routes>
           <Footer />
         </div>
