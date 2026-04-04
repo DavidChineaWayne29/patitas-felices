@@ -43,7 +43,10 @@ export default function ChatBox({ animal, tipo = 'publico', onNeedAuth }) {
       const { data } = await getMensajesPublicos(animal.id)
       setMsgs(data || [])
     } else if (user) {
-      const { data } = await getMensajesPrivados(animal.id, user.id)
+      const userId = user.user_metadata?.rol === 'admin' 
+        ? animal.usuario_id || user.id 
+        : user.id
+      const { data } = await getMensajesPrivados(animal.id, userId)
       setMsgs(data || [])
     }
   }
