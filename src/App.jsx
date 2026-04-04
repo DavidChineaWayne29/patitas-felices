@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect } from 'react'
 import { AuthProvider } from './hooks/useAuth'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -10,28 +10,25 @@ import ComoFunciona from './pages/ComoFunciona'
 import Contacto from './pages/Contacto'
 import Favoritos from './pages/Favoritos'
 
-function ScrollToTop({ contentRef }) {
+function ScrollToTop() {
   const { pathname } = useLocation()
-  useEffect(() => {
-    if (contentRef.current) {
-      contentRef.current.scrollTop = 0
-    }
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
     document.documentElement.scrollTop = 0
     document.body.scrollTop = 0
   }, [pathname])
+
   return null
 }
 
 export default function App() {
-  const contentRef = useRef(null)
-
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <ScrollToTop contentRef={contentRef} />
+      <BrowserRouter future={{ v7_scrollRestoration: false }}>
+        <ScrollToTop />
         <Navbar />
-        <div className="main-content" ref={contentRef}>
+        <div className="main-content">
           <Routes>
             <Route path="/"              element={<Home />} />
             <Route path="/animal/:id"   element={<AnimalPage />} />
