@@ -73,20 +73,25 @@ export default function Home() {
 
       <div className={styles.filtersBar}>
         <div className={styles.filtersInner}>
-          <span className={styles.filterLabel}>{t('filtros.especie')}</span>
-          {ESPECIES.map((e, i) => (
-            <button key={e} className={`${styles.chip} ${especie===i ? styles.chipOn : ''}`}
-              onClick={() => setEspecie(i)}>{t(e)}</button>
-          ))}
+          <div className={styles.filterGroup}>
+            {ESPECIES.map((e, i) => (
+              <button key={e} className={`${styles.chip} ${especie===i ? styles.chipOn : ''}`}
+                onClick={() => setEspecie(i)}>{t(e)}</button>
+            ))}
+          </div>
           <div className={styles.sep}/>
-          <span className={styles.filterLabel}>{t('filtros.tamano')}</span>
-          {TAMANOS.map((t2, i) => (
-            <button key={t2} className={`${styles.chip} ${tamano===i ? styles.chipOn : ''}`}
-              onClick={() => setTamano(i)}>{t(t2)}</button>
-          ))}
+          <div className={styles.filterGroup}>
+            {TAMANOS.map((t2, i) => (
+              <button key={t2} className={`${styles.chip} ${tamano===i ? styles.chipOn : ''}`}
+                onClick={() => setTamano(i)}>{t(t2)}</button>
+            ))}
+          </div>
           <div className={styles.sep}/>
-          <button className={`${styles.chip} ${estado ? styles.chipOn : ''}`}
-            onClick={() => setEstado(v => !v)}>{t('filtros.disponible')}</button>
+          <button
+            className={`${styles.chipDisp} ${estado ? styles.chipDispOn : ''}`}
+            onClick={() => setEstado(v => !v)}>
+            {t('filtros.disponible')}
+          </button>
         </div>
       </div>
 
