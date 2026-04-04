@@ -48,8 +48,14 @@ html, body {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--cream); }
 ::-webkit-scrollbar-thumb { background: var(--sage); border-radius: 3px; }
+
 @media (max-width: 640px) {
   .main-content {
     padding-bottom: 65px;
+  }
+
+  .bottomBar {
+    bottom: 0 !important;
+    top: auto !important;
   }
 }
