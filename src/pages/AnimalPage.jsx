@@ -38,8 +38,15 @@ export default function AnimalPage() {
     getAnimal(id).then(({ data }) => {
       if (!data) { navigate('/'); return }
       setAnimal(data)
-      setLoading(false)
       if (data.foto_principal) getAnimalFotoUrl(data.foto_principal).then(setFotoUrl)
+      setLoading(false)
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.scrollTo(0, 0)
+          document.documentElement.scrollTop = 0
+          document.body.scrollTop = 0
+        })
+      })
     })
   }, [id])
 
