@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Fraunces:ital,wght@0,400;0,500;1,400&display=swap');
-
 :root {
   --mint: #E8F5EE;
   --sage: #B8D8C4;
@@ -14,54 +13,43 @@
   --red: #E8476A;
   --red-light: #FFE8EE;
 }
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   background: var(--cream);
   color: var(--text);
   min-height: 100vh;
 }
-
 h1, h2, h3 {
   font-family: 'Fraunces', serif;
 }
-
 a {
   text-decoration: none;
   color: inherit;
 }
-
 button {
   font-family: 'Plus Jakarta Sans', sans-serif;
   cursor: pointer;
 }
-
 input, textarea, select {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
-
 img {
   max-width: 100%;
   display: block;
 }
-
 html, body {
   scroll-behavior: auto !important;
 }
-
-/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--cream); }
 ::-webkit-scrollbar-thumb { background: var(--sage); border-radius: 3px; }
-
 @media (max-width: 640px) {
   .main-content {
-    padding-bottom: 70px;
+    padding-bottom: 65px;
   }
 }
