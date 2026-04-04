@@ -87,11 +87,18 @@ export default function Home() {
             ))}
           </div>
           <div className={styles.sep}/>
-          <button
-            className={`${styles.chipDisp} ${estado ? styles.chipDispOn : ''}`}
-            onClick={() => setEstado(v => !v)}>
-            {t('filtros.disponible')}
-          </button>
+          <div className={styles.filterGroup}>
+            <button
+              className={`${styles.chip} ${!estado ? styles.chipOn : ''}`}
+              onClick={() => setEstado(false)}>
+              {t('filtros.todos')}
+            </button>
+            <button
+              className={`${styles.chip} ${estado ? styles.chipOn : ''}`}
+              onClick={() => setEstado(true)}>
+              {t('filtros.disponible')}
+            </button>
+          </div>
         </div>
       </div>
 
