@@ -47,9 +47,9 @@ export default function Footer() {
 
         <div className={styles.col}>
           <div className={styles.colTitle}>{t('footer.refugio')}</div>
-          <Link to="/como-funciona" className={styles.colLink}>{t('nav.comoFunciona')}</Link>
-          <Link to="/contacto" className={styles.colLink}>{t('nav.contacto')}</Link>
-          <Link to="/favoritos" className={styles.colLink}>{t('nav.favoritos')}</Link>
+          <Link to="/como-funciona" className={styles.colLink} onClick={() => window.scrollTo(0,0)}>{t('nav.comoFunciona')}</Link>
+          <Link to="/contacto" className={styles.colLink} onClick={() => window.scrollTo(0,0)}>{t('nav.contacto')}</Link>
+          <Link to="/favoritos" className={styles.colLink} onClick={() => window.scrollTo(0,0)}>{t('nav.favoritos')}</Link>
         </div>
 
         <div className={styles.col}>
@@ -69,9 +69,9 @@ export default function Footer() {
       <div className={styles.bottom}>
         <span>© {new Date().getFullYear()} Patitas Felices</span>
         <div className={styles.legal}>
-          <Link to="/aviso-legal" className={styles.legalLink}>{t('footer.avisoLegal')}</Link>
-          <Link to="/privacidad" className={styles.legalLink}>{t('footer.privacidad')}</Link>
-          <Link to="/cookies" className={styles.legalLink}>{t('footer.cookies')}</Link>
+          <Link to="/aviso-legal" className={styles.legalLink} onClick={() => window.scrollTo(0,0)}>{t('footer.avisoLegal')}</Link>
+          <Link to="/privacidad" className={styles.legalLink} onClick={() => window.scrollTo(0,0)}>{t('footer.privacidad')}</Link>
+          <Link to="/cookies" className={styles.legalLink} onClick={() => window.scrollTo(0,0)}>{t('footer.cookies')}</Link>
         </div>
       </div>
     </footer>
