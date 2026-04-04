@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getAnimal, getAnimalFotoUrl, crearSolicitudAdopcion } from '../lib/supabase'
@@ -16,14 +16,23 @@ export default function AnimalPage() {
   const [animal, setAnimal] = useState(null)
   const [fotoUrl, setFotoUrl] = useState(null)
   const [loading, setLoading] = useState(true)
-
-  useEffect(() => { window.scrollTo(0,0) }, [id])
-  
   const [panel, setPanel] = useState(null)
   const [showAuth, setShowAuth] = useState(false)
   const [adoptForm, setAdoptForm] = useState({ nombre: '', email: '', telefono: '', mensaje: '' })
   const [adoptOk, setAdoptOk] = useState(false)
   const [adoptLoading, setAdoptLoading] = useState(false)
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [])
 
   useEffect(() => {
     getAnimal(id).then(({ data }) => {
