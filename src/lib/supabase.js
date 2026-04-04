@@ -103,7 +103,7 @@ export async function toggleLike(animalId, userId) {
 export async function getMensajesPublicos(animalId) {
   const { data, error } = await supabase
     .from('chat_publico')
-    .select('*, usuario:usuario_id(nombre:raw_user_meta_data->>nombre, email)')
+    .select('*')
     .eq('animal_id', animalId)
     .order('created_at', { ascending: true })
   return { data, error }
