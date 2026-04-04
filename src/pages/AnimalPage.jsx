@@ -16,13 +16,14 @@ export default function AnimalPage() {
   const [animal, setAnimal] = useState(null)
   const [fotoUrl, setFotoUrl] = useState(null)
   const [loading, setLoading] = useState(true)
+
+  useEffect(() => { window.scrollTo(0,0) }, [id])
+  
   const [panel, setPanel] = useState(null)
   const [showAuth, setShowAuth] = useState(false)
   const [adoptForm, setAdoptForm] = useState({ nombre: '', email: '', telefono: '', mensaje: '' })
   const [adoptOk, setAdoptOk] = useState(false)
   const [adoptLoading, setAdoptLoading] = useState(false)
-
-  useEffect(() => { window.scrollTo(0,0) }, [id])
 
   useEffect(() => {
     document.getElementById('root').scrollIntoView({ behavior: 'instant' })
