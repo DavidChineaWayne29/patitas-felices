@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { signOut } from '../lib/supabase'
@@ -228,8 +228,34 @@ export default function Navbar() {
 function BottomBar({ isActive, t, user, isAdmin, onAuth, onSignOut }) {
   const navigate = useNavigate()
 
+  useEffect(() => {
+    const bar = document.getElementById('bottom-bar')
+    if (!bar) return
+
+    function fix() {
+      const vh = window.innerHeight
+      bar.style.top = (vh - bar.offsetHeight) + 'px'
+    }
+
+    fix()
+    window.addEventListener('resize', fix)
+    window.addEventListener('scroll', fix, { passive: true })
+    return () => {
+      window.removeEventListener('resize', fix)
+      window.removeEventListener('scroll', fix)
+    }
+  }, [])
+
   return (
-    <div className={styles.bottomBar}>
+    <div id="bottom-bar" style={{
+      position: 'fixed',
+      left: 0,
+      right: 0,
+      background: '#FAFFFE',
+      borderTop: '1px solid #D4EAD8',
+      zIndex: 9999,
+      display: 'flex',
+    }}>
       <Link to="/" className={`${styles.tabItem} ${isActive('/') ? styles.tabActive : ''}`}>
         <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
           <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
@@ -255,24 +281,24 @@ function BottomBar({ isActive, t, user, isAdmin, onAuth, onSignOut }) {
         <span>{t('nav.contacto')}</span>
       </Link>
       {user ? (
-        <div className={styles.tabItem} style={{position:'relative'}}>
-          {isAdmin && (
-            <button className={styles.tabItem} onClick={() => navigate('/admin')}>
+        <button className={`${styles.tabItem} ${styles.tabBtn}`}
+          onClick={() => isAdmin ? navigate('/admin') : onSignOut()}>
+          {isAdmin ? (
+            <>
               <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
                 <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
               </svg>
               <span>{t('nav.panelAdmin')}</span>
-            </button>
-          )}
-          {!isAdmin && (
-            <button className={styles.tabItem} onClick={onSignOut}>
+            </>
+          ) : (
+            <>
               <div className={styles.tabAvatar}>
                 {(user.user_metadata?.nombre || user.email)?.[0]?.toUpperCase()}
               </div>
               <span>{(user.user_metadata?.nombre || user.email?.split('@')[0])?.split(' ')[0]}</span>
-            </button>
+            </>
           )}
-        </div>
+        </button>
       ) : (
         <button className={`${styles.tabItem} ${styles.tabBtn}`} onClick={onAuth}>
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
