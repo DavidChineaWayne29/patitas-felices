@@ -16,6 +16,7 @@ export default function AdminPage() {
   const [editId, setEditId] = useState(null)
   const [saving, setSaving] = useState(false)
   const [foto, setFoto] = useState(null)
+  const [fotoUrl, setFotoUrl] = useState(null)
   const [msg, setMsg] = useState('')
 
   useEffect(() => {
@@ -95,9 +96,15 @@ export default function AdminPage() {
     loadAll()
   }
 
-  function editAnimal(a) {
+  async function editAnimal(a) {
     setFormAnimal(a)
     setEditId(a.id)
+    setFoto(null)
+    setFotoUrl(null)
+    if (a.foto_principal) {
+      const { data } = supabase.storage.from('animales-fotos').getPublicUrl(a.foto_principal)
+      setFotoUrl(data.publicUrl)
+    }
     setTab('animales')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -241,10 +248,12 @@ export default function AdminPage() {
                   <label className={styles.fotoUpload}>
                     {foto ? (
                       <img src={URL.createObjectURL(foto)} alt="preview" className={styles.fotoPreview}/>
+                    ) : fotoUrl ? (
+                      <img src={fotoUrl} alt="foto actual" className={styles.fotoPreview}/>
                     ) : formAnimal.foto_principal ? (
                       <div className={styles.fotoExiste}>
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--green)"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                        <span>Ya tiene foto — haz clic para cambiarla</span>
+                        <span>Cargando foto...</span>
                       </div>
                     ) : (
                       <div className={styles.fotoPlaceholder}>
@@ -282,6 +291,19 @@ export default function AdminPage() {
               <div className={styles.animalList}>
                 {animales.map(a => (
                   <div key={a.id} className={styles.animalRow}>
+                    <div className={styles.animalThumb}>
+                      {a.foto_principal ? (
+                        <img
+                          src={supabase.storage.from('animales-fotos').getPublicUrl(a.foto_principal).data.publicUrl}
+                          alt={a.nombre}
+                          className={styles.animalThumbImg}
+                        />
+                      ) : (
+                        <div className={styles.animalThumbEmpty}>
+                          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--sage)"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        </div>
+                      )}
+                    </div>
                     <div className={styles.animalInfo}>
                       <span className={styles.animalNombre}>{a.nombre}</span>
                       <span className={styles.animalMeta}>{a.especie} · {a.tamano} · {a.estado}</span>
