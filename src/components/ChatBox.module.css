@@ -151,3 +151,91 @@
   border: 1px solid var(--border);
   border-radius: 10px 10px 10px 2px;
 }
+
+.hilos {
+  border-bottom: 1px solid var(--border);
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.hilo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: .6rem 1rem;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  text-align: left;
+  transition: background .1s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.hilo:hover { background: var(--cream); }
+.hiloOn { background: var(--mint) !important; }
+
+.hiloAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--sage);
+  color: var(--forest);
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hiloInfo { flex: 1; min-width: 0; }
+
+.hiloId {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--deep);
+}
+
+.hiloUltimo {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.msgWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.msgBurbuja {
+  font-size: 12px;
+  line-height: 1.55;
+  padding: 7px 10px;
+  border-radius: 10px;
+  max-width: 85%;
+  word-break: break-word;
+}
+
+.msgBurbujaMia {
+  background: var(--green);
+  color: white;
+  border-radius: 10px 10px 2px 10px;
+}
+
+.msgBurbujaAdmin {
+  background: var(--mint);
+  color: var(--forest);
+  border-radius: 10px 10px 10px 2px;
+}
+
+.msgBurbujaOtro {
+  background: var(--cream);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px 10px 10px 2px;
+}
